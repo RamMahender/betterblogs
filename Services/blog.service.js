@@ -24,23 +24,71 @@ exports.addpost = function (req, res) {
     })
 }
 
-exports.getposts = function(req, res){
-    blogSchema.find({status:true},function(err ,data){
-        if(err){
+exports.getposts = function (req, res) {
+    blogSchema.find({ status: true }, function (err, data) {
+        if (err) {
             res.json({
-                success:false,
+                success: false,
                 message: "Something went wrong " + err
             })
-        } else if(data.length > 0){
+        } else if (data.length > 0) {
             res.json({
-                success:true,
-                Total_Posts : data.length,
+                success: true,
+                Total_Posts: data.length,
                 data
             })
-        }else{
+        } else {
             res.json({
-                success:false,
-                message:"Data not found"
+                success: false,
+                message: "Data not found"
+            })
+        }
+    })
+}
+
+exports.editpost = function (req, res) {
+    var updatedata = {
+        title: req.body.title,
+        image: req.body.image,
+        content: req.body.content,
+        category: req.body.category
+    }
+    blogSchema.findOneAndDelete({ _id: req.params._id }, updatedata, function (err, data) {
+        if (err) {
+            res.json({
+                success: false,
+                message: err
+            })
+        } else if (data) {
+            res.json({
+                success: true,
+                message: "Updated data"
+            })
+        } else {
+            res.json({
+                success: false,
+                message: "Data not found"
+            })
+        }
+    })
+}
+
+exports.deletepost = function (req, res) {
+    blogSchema.findOneAndDelete({ _id: req.params._id }, { status: false }, function (err, deldata) {
+        if (err) {
+            res.json({
+                success: false,
+                message: err
+            })
+        } else if (deldata) {
+            res.json({
+                success: true,
+                message: "Deleted post successfully"
+            })
+        } else {
+            res.json({
+                success: false,
+                message: "Post not found"
             })
         }
     })

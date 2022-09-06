@@ -7,6 +7,12 @@ const BlogService = require("../Services/blog.service")
 router.post('/addpost', BlogService.addpost)
 
 //Get Posts
-router.get('/getposts' , BlogService.getposts)
+router.get('/getposts', BlogService.getposts)
 
-module.exports = router;
+//Edit Posts
+router.put('/editposts/:_id', BlogService.editpost)
+
+//Delete Posts
+router.delete('/deleteposts/:_id', BlogService.deletepost)
+
+module.exports = router
