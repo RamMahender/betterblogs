@@ -53,7 +53,7 @@ exports.editpost = function (req, res) {
         content: req.body.content,
         category: req.body.category
     }
-    blogSchema.findOneAndDelete({ _id: req.params._id }, updatedata, function (err, data) {
+    blogSchema.findOneAndUpdate({ _id: req.params._id }, updatedata, function (err, data) {
         if (err) {
             res.json({
                 success: false,
